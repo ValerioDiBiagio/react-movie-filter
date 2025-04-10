@@ -5,21 +5,33 @@ function App() {
 
   const [moviesList, setMoviesList] = useState(movies);
   const [searchGenre, setSearchGenre] = useState('');
+  const [searchTitle, setSearchTitle] = useState('');
 
   useEffect(() => {
 
     let results = movies;
 
-
     if (searchGenre !== '') {
       results = movies.filter(movie => movie.genre.includes(searchGenre))
 
-    } else {
+    }
+
+    if (searchTitle !== '') {
+
+
+      results = movies.filter(movie => {
+
+        const titleLow = movie.title.toLowerCase();
+        return titleLow.includes(searchTitle)
+      })
+
 
     }
+
+
     setMoviesList(results)
 
-  }, [searchGenre, movies])
+  }, [searchGenre, searchTitle])
 
   return (
     <>
@@ -41,6 +53,8 @@ function App() {
         </div>
       </section>
 
+      <label>Cerca per titolo</label>
+      <div><input type="text" value={searchTitle} onChange={(e => setSearchTitle(e.target.value))} /></div>
 
       {moviesList.map((movie, i) => <section key={i}>
         <h4>{movie.title}</h4>
