@@ -19,7 +19,7 @@ function App() {
     }
     setMoviesList(results)
 
-  }, [searchGenre])
+  }, [searchGenre, movies])
 
   return (
     <>
@@ -32,7 +32,7 @@ function App() {
         <label>Cerca per genere</label>
         <div>
           <select value={searchGenre} onChange={(e => setSearchGenre(e.target.value))}>
-            <option>---</option>
+            <option value=''>---</option>
             <option>Fantascienza</option>
             <option>Thriller</option>
             <option>Romantico</option>
@@ -42,7 +42,7 @@ function App() {
       </section>
 
 
-      {movies.map((movie, i) => <section key={i}>
+      {moviesList.map((movie, i) => <section key={i}>
         <h4>{movie.title}</h4>
         <p>{movie.genre}</p>
       </section>)}
