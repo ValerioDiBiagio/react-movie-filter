@@ -4,22 +4,23 @@ import movies from './data/movies.'
 function App() {
 
   const [moviesList, setMoviesList] = useState(movies);
+  const [searchMovies, setSearchMovies] = useState(moviesList);
   const [searchGenre, setSearchGenre] = useState('');
   const [searchTitle, setSearchTitle] = useState('');
 
   useEffect(() => {
 
-    let results = movies;
+    let results = moviesList;
 
     if (searchGenre !== '') {
-      results = movies.filter(movie => movie.genre.includes(searchGenre))
+      results = results.filter(movie => movie.genre === searchGenre)
 
     }
 
     if (searchTitle !== '') {
 
 
-      results = movies.filter(movie => {
+      results = results.filter(movie => {
 
         const titleLow = movie.title.toLowerCase();
         return titleLow.includes(searchTitle)
@@ -29,9 +30,9 @@ function App() {
     }
 
 
-    setMoviesList(results)
+    setSearchMovies(results)
 
-  }, [searchGenre, searchTitle])
+  }, [searchGenre, searchTitle, moviesList])
 
   return (
     <>
@@ -59,7 +60,7 @@ function App() {
           <div><input type="text" value={searchTitle} onChange={(e => setSearchTitle(e.target.value))} /></div>
         </section>
 
-        {moviesList.map((movie, i) => <section key={i}>
+        {searchMovies.map((movie, i) => <section key={i}>
           <h4>{movie.title}</h4>
           <p>{movie.genre}</p>
         </section>)}
